@@ -240,7 +240,7 @@
           </div>
         </div>
       </section>
-      <section class="popular section d-flex align-items-center">
+      <section class="popular section d-flex align-items-center" id="popular">
         <div class="container">
           <header class="section-header">
             <h2 class="text-center">
@@ -253,6 +253,9 @@
             class="carousel slide"
             data-ride="carousel"
           >
+
+          <div id="videoLoader" class="loader"></div>
+
             <div class="carousel-inner">
               <div class="carousel-item active">
                 <div class="row align-items-center mx-auto">
@@ -1089,5 +1092,56 @@
         </div>
       </section>
     </main>
+
+    <script>
+$(document).ready(function () {
+  const $carousel = $("#carouselExampleControls2");
+  const $carouselInner = $carousel.find(".carousel-inner");
+  const $loader = $("#videoLoader");
+  
+
+  let clickCount = 0;
+
+  // Disable bootstrap automatic sliding
+  $carousel.carousel({ interval: false });
+
+  function slideCarousel(direction) {
+    clickCount++;
+
+    if (clickCount % 3 === 0) {
+      // After every 3 clicks -> hide carousel content
+      $carouselInner.addClass("invisible");
+      $loader.show();
+      
+
+      setTimeout(() => {
+        $loader.hide();
+        $carouselInner.removeClass("invisible");
+
+        // Trigger the actual slide
+        $carousel.carousel(direction);
+      }, 1000);
+
+      
+    } else {
+      $carousel.carousel(direction);
+    }
+  }
+
+  $carousel.find(".carousel-control-next").on("click", function (e) {
+    e.preventDefault();
+    slideCarousel("next");
+  });
+
+  $carousel.find(".carousel-control-prev").on("click", function (e) {
+    e.preventDefault();
+    slideCarousel("prev");
+  });
+});
+</script>
+
+
+
+
   </body>
 </html>
