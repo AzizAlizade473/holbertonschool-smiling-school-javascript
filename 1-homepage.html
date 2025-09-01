@@ -143,6 +143,10 @@
             class="carousel slide"
             data-ride="carousel"
           >
+
+           <div id="carouselLoader" class="loader"></div>
+
+
             <div class="carousel-inner">
               <div class="carousel-item active">
                 <div class="row mx-auto align-items-center">
@@ -170,7 +174,7 @@
                 <div class="row mx-auto align-items-center">
                   <div class="col-12 col-sm-2 col-lg-2 offset-lg-1 text-center">
                     <img
-                      src="images/profile_5.jpg"
+                      src="images/profile_2.jpg"
                       class="d-block align-self-center"
                       alt="Carousel Pic 1"
                     />
@@ -192,7 +196,7 @@
                 <div class="row mx-auto align-items-center">
                   <div class="col-12 col-sm-2 col-lg-2 offset-lg-1 text-center">
                     <img
-                      src="images/profile_5.jpg"
+                      src="images/profile_3.jpg"
                       class="d-block align-self-center"
                       alt="Carousel Pic 1"
                     />
@@ -241,5 +245,44 @@
         </div>
       </section>
     </main>
+
+   <script>
+  $(document).ready(function () {
+    const $loader = $("#carouselLoader");
+    const $carousel = $("#carouselExampleControls");
+    const $carouselInner = $carousel.find(".carousel-inner");
+
+    // Stop autoplay
+    $carousel.carousel({ interval: false });
+
+    let clickCount = 0; // keep track of arrow clicks
+
+    $(".carousel-control-prev, .carousel-control-next").on("click", function (e) {
+      e.preventDefault();
+
+      const action = $(this).hasClass("carousel-control-next") ? "next" : "prev";
+
+      clickCount++;
+
+      if (clickCount % 3 === 0) {
+        // Every 3rd click → show loader
+        $carouselInner.addClass("hidden");
+        $loader.show();
+
+        setTimeout(() => {
+          $loader.hide();
+          $carouselInner.removeClass("hidden");
+          $carousel.carousel(action);
+        }, 500);
+      } else {
+        // Normal slide change
+        $carousel.carousel(action);
+      }
+    });
+  });
+</script>
+
+
+
   </body>
 </html>
